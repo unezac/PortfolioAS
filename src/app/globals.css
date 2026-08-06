@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-bg-base: #040404;
+  
+  --color-surface-solid: #0A0A0A;
+  --color-surface-elevated: #121212;
+  --color-surface-glass: rgba(8, 8, 8, 0.55);
+  
+  --color-primary: #5B5FFB;
+  --color-primary-hover: #7377FF;
+  --color-primary-glow: rgba(91, 95, 251, 0.35);
+
+  --color-border-glass: rgba(255, 255, 255, 0.08);
+  --color-border-highlight: rgba(255, 255, 255, 0.15);
+
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: var(--color-zinc-400);
+  --color-text-tertiary: var(--color-zinc-600);
+
+  /* Radius */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-xxl: 40px;
+  --radius-pill: 999px;
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+}
+
+:root {
+  /* Vanguard Easing */
+  --ease-vanguard: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Hide scrollbar for cleaner cinematic look */
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  background-color: var(--color-bg-base);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  position: relative;
+  min-height: 100dvh;
+}
+
+/* =========================================
+   4-LAYER BACKGROUND ARCHITECTURE
+========================================= */
+
+/* Layer 1: Base (body background-color) */
+
+/* Layer 2: Ambient Light (Radial Mesh) */
+.layer-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+  background: 
+    radial-gradient(circle at 15% 15%, rgba(91, 95, 251, 0.12), transparent 40%),
+    radial-gradient(circle at 85% 85%, rgba(91, 95, 251, 0.08), transparent 35%);
+}
+
+/* Layer 3: Texture (SVG Noise) */
+.layer-noise {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.035;
+  mix-blend-mode: screen;
+}
+
+/* Layer 4: Structure (Tiny Grid) */
+.layer-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 32px 32px;
+  opacity: 0.015;
+  mask-image: radial-gradient(ellipse at 50% 50%, black 20%, transparent 80%);
+}
+
+
+/* =========================================
+   UTILITIES
+========================================= */
+
+/* Glass Recipe */
+.glass-panel {
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  background-color: var(--color-surface-glass);
+  border: 1px solid var(--color-border-glass);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Double Bezel */
+.double-bezel-outer {
+  background: var(--color-border-glass);
+  padding: 1px;
+  border-radius: var(--radius-xl);
+}
+.double-bezel-inner {
+  background: var(--color-surface-solid);
+  border-radius: calc(var(--radius-xl) - 2px);
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
+}
+
+/* Typography Scale Extracted */
+.text-display-xl {
+  font-size: clamp(4rem, 8vw, 8rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
+  font-weight: 500;
+}
+.text-display-l {
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+}
+.text-mono-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-weight: 500;
+}
+
+/* Common resets and performance */
+.will-animate {
+  will-change: transform, opacity;
+}

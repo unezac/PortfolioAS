@@ -1,0 +1,146 @@
+{
+  "arrival": {
+    "status": "Zielgerichtet auf Karrierechancen in Deutschland",
+    "firstName": "Abdellah",
+    "lastName": "Selmani",
+    "description": "Student der Künstlichen Intelligenz und Backend-Entwickler. Ich verbringe die meiste Zeit damit, KI zu erforschen, Softwaresysteme zu entwerfen und sauberen Code zu schreiben. Ich liebe es, Probleme Schritt für Schritt zu lösen und Dinge von Grund auf neu aufzubauen.",
+    "exploreSystems": "Systeme Entdecken",
+    "downloadCV": "Lebenslauf Herunterladen",
+    "viewPhilosophy": "Philosophie Ansehen"
+  },
+  "systems": {
+    "title": "Ausgewählte Systeme",
+    "subtitle": "Proof of concept.",
+    "items": {
+      "moneybott": {
+        "role": "KI & Backend Architektur",
+        "description": "Ein Lernprojekt zur Integration von Künstlicher Intelligenz mit robuster Backend-Architektur und Software-Design."
+      },
+      "keygermany": {
+        "role": "Web & Backend Technologien",
+        "description": "Ein umfassendes Lernprojekt für Webentwicklung und Backend-Technologien, zugeschnitten auf Nutzer, die nach Deutschland umziehen."
+      },
+      "fastytdl": {
+        "role": "Desktop-Anwendung",
+        "description": "Eine Desktop-Anwendung, die mit Python entwickelt wurde, um schnelle YouTube-Downloads und Medienverarbeitung effizient zu bewältigen."
+      },
+      "hannymoney": {
+        "role": "Web-Anwendung",
+        "description": "Eine Webanwendung für persönliche Finanzen, entwickelt um Ausgabegewohnheiten klar zu verfolgen, zu verwalten und zu verstehen."
+      }
+    }
+  },
+  "identity": {
+    "title": "Identität",
+    "subtitle": "Der Ingenieur hinter den Systemen.",
+    "bioTitle": "Kontinuierliches Lernen.",
+    "bioText": "Ich bin Student der Künstlichen Intelligenz und lerne am liebsten durch praktische Projekte. Die meiste Zeit verbringe ich damit, meine Programmierkenntnisse zu verbessern, Softwaresysteme zu verstehen und KI zu erforschen. Ich glaube, dass kontinuierliches Lernen der beste Weg ist, ein besserer Ingenieur zu werden.",
+    "currentNode": "Aktueller Standort",
+    "location": "Kenitra, Marokko",
+    "locationStatus": "Vorbereitung auf Karrierechancen in Deutschland.",
+    "spokenLanguagesTitle": "Sprachen",
+    "spokenLanguages": {
+      "ar": "Arabisch (Muttersprache)",
+      "en": "Englisch (B2)",
+      "de": "Deutsch (B2)",
+      "fr": "Französisch (B1)"
+    },
+    "focus1": "Fokus 01",
+    "focus1Title": "Problemlösung",
+    "focus1Text": "Ich löse Probleme gerne Schritt für Schritt. Komplexe Anforderungen in kleinere, überschaubare Teile zu zerlegen, hilft mir, wartbaren Code zu schreiben.",
+    "focus2": "Fokus 02",
+    "focus2Title": "Sauberer Code & Architektur",
+    "focus2Text": "Ich lege großen Wert darauf, Softwarearchitektur zu verstehen und sauberen, testbaren Code zu schreiben, um zuverlässige Systeme zu entwickeln.",
+    "focus3": "Fokus 03",
+    "focus3Title": "Langfristiges Ziel",
+    "focus3Text": "Mein Ziel ist es, ein qualifizierter KI-Ingenieur zu werden, der nützliche Software entwickelt, die Künstliche Intelligenz mit robusten Backend-Systemen kombiniert."
+  },
+  "timeline": {
+    "title": "Zeitachse",
+    "subtitle": "Evolution.",
+    "viewCertificate": "Zertifikat Ansehen",
+    "items": {
+      "ibntofail": {
+        "year": "2024 - Heute (Voraussichtlich 2028)",
+        "role": "Student der Künstlichen Intelligenz",
+        "company": "Ibn Tofail Universität",
+        "description": "Derzeit im zweiten Jahr meines Bachelor-Studiums in Künstlicher Intelligenz. Mein Fokus liegt auf maschinellem Lernen, Deep Learning und neuronalen Netzen."
+      },
+      "alx": {
+        "year": "2024 (Abgeschlossen am 3. Sep)",
+        "role": "Zertifizierter virtueller Assistent",
+        "company": "ALX Africa",
+        "description": "Erfolgreicher Abschluss eines intensiven 8-wöchigen Programms für virtuelle Assistenz im digitalen Zeitalter, in dem Kenntnisse moderner digitaler Tools und KI-Workflows nachgewiesen wurden."
+      },
+      "independent": {
+        "year": "2022 - Heute",
+        "role": "Autodidaktischer Backend-Entwickler",
+        "company": "Unabhängige Projekte",
+        "description": "Kontinuierliche Entwicklung persönlicher Projekte (wie MoneyBott und FastYTDL), um Softwarearchitektur, Backend-Engineering und saubere Code-Praktiken zu meistern."
+      }
+    }
+  },
+  "capabilities": {
+    "title": "Aktueller Fokus",
+    "subtitle": "Was ich verbessere.",
+    "description": "Ich lerne ständig dazu und erweitere meine Fähigkeiten in Künstlicher Intelligenz und Backend-Systemen.",
+    "items": {
+      "ai": {
+        "title": "Künstliche Intelligenz",
+        "description": "Derzeit lerne ich Maschinelles Lernen, Deep Learning und Neuronale Netze, um intelligente Automatisierungs- und KI-Anwendungen zu entwickeln."
+      },
+      "backend": {
+        "title": "Backend-Entwicklung",
+        "description": "Softwarearchitektur verstehen und zuverlässige Backends mit Python, FastAPI und robusten SQL/NoSQL-Datenbanken aufbauen."
+      },
+      "software": {
+        "title": "Software Engineering",
+        "description": "Verbesserung der Problemlösungsfähigkeiten und Clean-Code-Praktiken. Erlernen von C, PHP und moderner Webentwicklung, um meinen technischen Horizont zu erweitern."
+      },
+      "project": {
+        "title": "Projekte Entwickeln",
+        "description": "Ich glaube an Learning by Doing. Ich entwickle ständig persönliche Projekte, um neue Konzepte in der Webentwicklung und Systemarchitektur anzuwenden."
+      }
+    }
+  },
+  "process": {
+    "title": "Prozess",
+    "subtitle": "Wie ich entwickle.",
+    "steps": {
+      "01": {
+        "title": "Architektur-Design",
+        "text": "Bevor eine einzige Zeile Code geschrieben wird, architekte ich den Datenfluss, definiere die Grenzen von Microservices und kartiere die Fehlerdomänen. Systemdesign ist die Grundlage für Skalierbarkeit."
+      },
+      "02": {
+        "title": "Kern-Implementierung",
+        "text": "Aufbau der robusten Grundlagen. Auswahl der richtigen Datenbankschemata, Schreiben paralleler Pipelines in Go oder Python und Gewährleistung von Zero-Trust-Sicherheit zwischen den Diensten."
+      },
+      "03": {
+        "title": "Beobachtbarkeitsschicht",
+        "text": "Ein System, das Sie nicht überwachen können, ist ein System, dem Sie nicht vertrauen können. Integration von strukturiertem Logging, Metrik-Aggregatoren und verteiltem Tracing vom ersten Tag an."
+      },
+      "04": {
+        "title": "Optimierung & Skalierung",
+        "text": "Stresstests der Infrastruktur, Tuning der Garbage Collection, Optimierung von Abfrageausführungsplänen und Automatisierung von Bereitstellungen für Zero-Downtime-Releases."
+      }
+    }
+  },
+  "stack": {
+    "title": "Tech-Stack",
+    "subtitle": "Das Arsenal.",
+    "categories": {
+      "programming": "Programmierung",
+      "ai": "Künstliche Intelligenz",
+      "backend": "Backend",
+      "frontend": "Frontend",
+      "databases": "Datenbanken",
+      "tools": "Tools & OS"
+    }
+  },
+  "contact": {
+    "title": "Protokoll Initiieren",
+    "subtitle": "Bereit zu bauen?",
+    "description": "Ob Sie autonome Agenten erforschen, Datenströme mit hohem Durchsatz entwerfen oder ein robustes Backend aufbauen – lassen Sie uns die Lösung entwickeln.",
+    "email": "selmaniabde78@gmail.com"
+  }
+}

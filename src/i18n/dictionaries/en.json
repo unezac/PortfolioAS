@@ -1,0 +1,146 @@
+{
+  "arrival": {
+    "status": "Targeting Opportunities in Germany",
+    "firstName": "Abdellah",
+    "lastName": "Selmani",
+    "description": "Artificial Intelligence Student and Backend Developer. I spend most of my time exploring AI, designing software systems, and writing clean code. I love solving problems step by step and building things from the ground up.",
+    "exploreSystems": "Explore Systems",
+    "downloadCV": "Download CV",
+    "viewPhilosophy": "View Philosophy"
+  },
+  "systems": {
+    "title": "Featured Systems",
+    "subtitle": "Proof of concept.",
+    "items": {
+      "moneybott": {
+        "role": "AI & Backend Architecture",
+        "description": "A learning project focused on the integration of Artificial Intelligence with robust backend architecture and software design."
+      },
+      "keygermany": {
+        "role": "Web & Backend Technologies",
+        "description": "A comprehensive learning project for web development and backend technologies tailored towards users relocating to Germany."
+      },
+      "fastytdl": {
+        "role": "Desktop Application",
+        "description": "A desktop application built with Python to efficiently handle fast YouTube downloads and media processing."
+      },
+      "hannymoney": {
+        "role": "Web Application",
+        "description": "A personal finance web application designed to help track, manage, and understand spending habits clearly."
+      }
+    }
+  },
+  "identity": {
+    "title": "Identity",
+    "subtitle": "The Engineer behind the systems.",
+    "bioTitle": "Continuous Learning.",
+    "bioText": "I am an Artificial Intelligence student who enjoys learning by building projects. Most of my time is spent improving my programming skills, understanding how software systems work, and exploring AI. I believe continuous learning is the best way to become a better engineer.",
+    "currentNode": "Current Node",
+    "location": "Kénitra, Morocco",
+    "locationStatus": "Preparing for opportunities in Germany.",
+    "spokenLanguagesTitle": "Languages",
+    "spokenLanguages": {
+      "ar": "Arabic (Native)",
+      "en": "English (B2)",
+      "de": "German (B2)",
+      "fr": "French (B1)"
+    },
+    "focus1": "Focus 01",
+    "focus1Title": "Problem Solving",
+    "focus1Text": "I like solving problems step by step. Breaking down complex requirements into smaller, manageable chunks is how I write maintainable code.",
+    "focus2": "Focus 02",
+    "focus2Title": "Clean Code & Architecture",
+    "focus2Text": "I focus heavily on understanding software architecture and writing clean, testable code to ensure that the systems I build are reliable.",
+    "focus3": "Focus 03",
+    "focus3Title": "Long-Term Goal",
+    "focus3Text": "My ambition is to become a skilled AI Engineer capable of building useful software that combines Artificial Intelligence with robust backend systems."
+  },
+  "timeline": {
+    "title": "Timeline",
+    "subtitle": "Evolution.",
+    "viewCertificate": "View Certificate",
+    "items": {
+      "ibntofail": {
+        "year": "2024 - Present (Expected 2028)",
+        "role": "Artificial Intelligence Student",
+        "company": "Ibn Tofail University",
+        "description": "Currently in my second year pursuing a Bachelor in Artificial Intelligence. Deeply focused on Machine Learning, Deep Learning, and Neural Networks."
+      },
+      "alx": {
+        "year": "2024 (Completed Sep 3)",
+        "role": "Certified Virtual Assistant",
+        "company": "ALX Africa",
+        "description": "Successfully completed an intensive 8-week programme in Virtual Assistance Skills in the Digital Age, demonstrating proficiency in modern digital tools and AI workflows."
+      },
+      "independent": {
+        "year": "2022 - Present",
+        "role": "Self-Taught Backend Developer",
+        "company": "Independent Projects",
+        "description": "Continuously building personal projects (like MoneyBott and FastYTDL) to master software architecture, backend engineering, and clean code practices."
+      }
+    }
+  },
+  "capabilities": {
+    "title": "Current Focus",
+    "subtitle": "What I am improving.",
+    "description": "Continuously learning and expanding my skillset in Artificial Intelligence and Backend Systems.",
+    "items": {
+      "ai": {
+        "title": "Artificial Intelligence",
+        "description": "Currently learning Machine Learning, Deep Learning, and Neural Networks to build intelligent automation and AI applications."
+      },
+      "backend": {
+        "title": "Backend Development",
+        "description": "Understanding software architecture and building reliable backends using Python, FastAPI, and robust SQL/NoSQL databases."
+      },
+      "software": {
+        "title": "Software Engineering",
+        "description": "Improving problem solving and clean code practices. Learning C, PHP, and modern web development to widen my technical horizon."
+      },
+      "project": {
+        "title": "Project Building",
+        "description": "I believe in learning by doing. I constantly build personal projects to apply new concepts in web dev and systems architecture."
+      }
+    }
+  },
+  "process": {
+    "title": "Process",
+    "subtitle": "How I engineer.",
+    "steps": {
+      "01": {
+        "title": "Architecture Design",
+        "text": "Before a single line of code is written, I architect the data flow, define the boundaries of microservices, and map out the failure domains. System design is the foundation of scale."
+      },
+      "02": {
+        "title": "Core Implementation",
+        "text": "Building the robust primitives. Selecting the right database schemas, writing concurrent pipelines in Go or Python, and ensuring zero-trust security between services."
+      },
+      "03": {
+        "title": "Observability Layer",
+        "text": "A system you cannot monitor is a system you cannot trust. Integrating structured logging, metric aggregators, and distributed tracing from day one."
+      },
+      "04": {
+        "title": "Optimization & Scale",
+        "text": "Stress testing the infrastructure, tuning garbage collection, optimizing query execution plans, and automating deployments for zero-downtime shipping."
+      }
+    }
+  },
+  "stack": {
+    "title": "Tech Stack",
+    "subtitle": "The Arsenal.",
+    "categories": {
+      "programming": "Programming",
+      "ai": "Artificial Intelligence",
+      "backend": "Backend",
+      "frontend": "Frontend",
+      "databases": "Databases",
+      "tools": "Tools & OS"
+    }
+  },
+  "contact": {
+    "title": "Initiate Protocol",
+    "subtitle": "Ready to build?",
+    "description": "Whether you're exploring autonomous agents, designing high-throughput data streams, or architecting a robust backend—let's engineer the solution.",
+    "email": "selmaniabde78@gmail.com"
+  }
+}

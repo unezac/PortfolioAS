@@ -61,8 +61,8 @@ export function FeaturedSystemsSection() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
             >
-              <InteractiveCard className="group overflow-hidden">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 h-full min-h-[400px]">
+              <InteractiveCard className="group overflow-hidden w-full">
+                <div className="grid grid-cols-1 lg:grid-cols-[5fr_7fr] gap-8 lg:gap-0 h-full min-h-[320px] sm:min-h-[360px] lg:min-h-[400px]">
                   
                   {/* Info Panel */}
                   <div className="col-span-1 lg:col-span-5 p-8 sm:p-12 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-[var(--color-border-glass)]">
@@ -90,7 +90,7 @@ export function FeaturedSystemsSection() {
                   </div>
                   
                   {/* Visual Panel (Cinematic Abstract Representation instead of a Dashboard UI) */}
-                  <div className="col-span-1 lg:col-span-7 relative bg-[var(--color-bg-base)] overflow-hidden min-h-[300px] flex items-center justify-center p-8">
+                  <div className="col-span-1 lg:col-span-7 relative bg-[var(--color-bg-base)] overflow-hidden min-h-[240px] sm:min-h-[300px] flex items-center justify-center p-8">
                     {/* Abstract Hardware/System aesthetic */}
                     <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_center,var(--color-primary-glow),transparent_70%)] group-hover:opacity-40 transition-opacity duration-700" />
                     

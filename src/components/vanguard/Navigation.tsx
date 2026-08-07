@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { List, X, GlobeHemisphereWest, Sun, Moon } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -23,21 +23,35 @@ export function Navigation() {
   const { language, toggleLanguage } = useLanguage();
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-    if (isOpen) {
-      setHidden(false);
-      return;
-    }
-    const previous = scrollY.getPrevious() ?? 0;
-    if (latest > previous && latest > 100) {
-      setHidden(true);
-    } else {
-      setHidden(false);
-    }
-  });
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isOpen) {
+        setHidden(false);
+        return;
+      }
+
+      const latest = window.scrollY;
+      const previous = handleScroll.previous ?? 0;
+      handleScroll.previous = latest;
+
+      if (latest > previous && latest > 100) {
+        setHidden(true);
+      } else {
+        setHidden(false);
+      }
+    };
+
+    handleScroll.previous = 0;
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isOpen]);
 
   useEffect(() => {
     setMounted(true);
@@ -59,53 +73,37 @@ export function Navigation() {
         className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center"
       >
         <motion.nav
-          layout
           initial={false}
-          animate={{
-            width: isOpen ? 320 : "auto",
-            borderRadius: isOpen ? 32 : 999,
-          }}
-          transition={{ type: "spring", stiffness: 450, damping: 32, mass: 0.6 }}
-          className="overflow-hidden shadow-[0_20px_40px_-10px_rgba(0,0,0,0.3)] bg-black dark:bg-[#0A0A0A] ring-1 ring-white/10 dark:ring-white/5"
+          className={cn(
+            "overflow-hidden shadow-2xl bg-black dark:bg-[#0A0A0A] ring-1 ring-white/10 dark:ring-white/5 transition-all duration-200 ease-out",
+            isOpen ? "w-[320px] rounded-[24px]" : "w-[240px] rounded-[24px]"
+          )}
         >
-          <motion.div layout className="flex items-center justify-between px-2 py-2">
-            {!isOpen && (
+          <div className="flex items-center justify-between p-1.5">
               <motion.div
-                layout="position"
-                initial={{ opacity: 0, filter: "blur(4px)" }}
-                animate={{ opacity: 1, filter: "blur(0px)" }}
-                exit={{ opacity: 0, filter: "blur(4px)" }}
-                transition={{ duration: 0.2 }}
-                className="flex items-center gap-3 px-4"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.15 }}
+                className="flex items-center gap-2 px-3"
               >
-                {/* Mobile: Initials, Desktop: Full Name */}
-                <span className="text-sm font-medium tracking-wide text-white whitespace-nowrap">
-                  <span className="sm:hidden font-bold">AS</span>
-                  <span className="hidden sm:inline">Abdellah Selmani</span>
+                <span className="text-sm font-semibold tracking-wide uppercase animated-gradient-text">
+                  Abdellah Selmani
                 </span>
               </motion.div>
-            )}
 
             <motion.button
-              layout
+              layout="position"
               onClick={() => setIsOpen(!isOpen)}
-              className="relative w-9 h-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors ml-auto"
+              className="relative w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors ml-auto shrink-0"
               aria-label="Toggle menu"
             >
               {isOpen ? (
-                <motion.div
-                  animate={{ rotate: isOpen ? 90 : 0 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                >
+                <motion.div animate={{ rotate: 90 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
                   <X size={18} weight="bold" className="text-white" />
                 </motion.div>
               ) : (
-                <motion.div
-                  initial={{ x: 0 }}
-                  animate={{ x: 0 }}
-                  transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className="relative w-8 h-6 flex items-center justify-center"
-                >
+                <div className="relative w-8 h-6 flex items-center justify-center">
                   <span
                     className="absolute w-7 h-[2px] bg-white rounded-full"
                     style={{ transform: "translateY(-7px)" }}
@@ -118,29 +116,28 @@ export function Navigation() {
                     className="absolute w-6 h-[2px] bg-white rounded-full"
                     style={{ transform: "translateY(7px)" }}
                   />
-                </motion.div>
+                </div>
               )}
             </motion.button>
-          </motion.div>
+          </div>
 
           <AnimatePresence>
             {isOpen && (
               <motion.div
-                layout
-                initial={{ opacity: 0, filter: "blur(10px)", scale: 0.95 }}
-                animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
-                exit={{ opacity: 0, filter: "blur(10px)", scale: 0.95 }}
-                transition={{ duration: 0.25, ease: "easeOut" }}
-                className="px-6 pb-6 pt-2 origin-top"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.22, ease: "easeOut" }}
+                className="px-6 pb-6 pt-2 origin-top overflow-hidden"
               >
                 <div className="flex flex-col gap-1">
                   {NAV_LINKS.map((link, i) => (
                     <motion.div
                       key={link.label}
-                      initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
-                      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                      exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
-                      transition={{ delay: i * 0.04 + 0.1, type: "spring", stiffness: 300, damping: 20 }}
+                      initial={{ opacity: 0, y: 5 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -5 }}
+                      transition={{ delay: i * 0.02 + 0.04, duration: 0.18, ease: "easeOut" }}
                     >
                       <a
                         href={link.href}
@@ -155,10 +152,10 @@ export function Navigation() {
                 
                 {/* Mobile Controls */}
                 <motion.div
-                  initial={{ opacity: 0, filter: "blur(4px)", y: 10 }}
-                  animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
-                  exit={{ opacity: 0, filter: "blur(4px)", y: -10 }}
-                  transition={{ delay: NAV_LINKS.length * 0.04 + 0.1, type: "spring" }}
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
+                  transition={{ delay: NAV_LINKS.length * 0.02 + 0.05, duration: 0.18, ease: "easeOut" }}
                   className="flex sm:hidden items-center justify-between mt-6 pt-6 border-t border-white/10"
                 >
                   <button
@@ -189,8 +186,8 @@ export function Navigation() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: [0.32, 0.72, 0, 1] }}
-            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-md"
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
             onClick={() => setIsOpen(false)}
           />
         )}

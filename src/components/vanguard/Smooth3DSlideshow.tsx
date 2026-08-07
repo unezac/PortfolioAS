@@ -1,390 +1,230 @@
-"use client"
+// Round Carousel — Originkit
+// Originkit — props baked into the default export.
+"use client";
 
-import {
-    useState,
-    useEffect,
-    useCallback,
-    useRef,
-    type CSSProperties,
-} from "react"
-const useIsStaticRenderer = () => false
+import React, { useEffect, useRef } from "react";
 
-interface Slide {
-    image?: { src?: string; srcSet?: string; alt?: string }
-    title?: string
+interface RoundCarouselImage {
+  src: string;
 }
 
-type AutoplayDir = "leftToRight" | "rightToLeft"
-type TitleCorner = "topLeft" | "topRight" | "bottomLeft" | "bottomRight"
-
-interface Smooth3DSlideshowProps {
-    slides?: Slide[]
-    cardWidth?: number
-    cardHeight?: number
-    radius?: number
-    tilt?: number
-    sideTilt?: number
-    gap?: number
-    opacity?: number
-    transition?: any
-    autoplay?: boolean
-    autoplayDirection?: AutoplayDir
-    showTitle?: boolean
-    titleFont?: CSSProperties
-    titleColor?: string
-    titlePosition?: {
-        position?: TitleCorner
-        paddingLeft?: number
-        paddingRight?: number
-        paddingTop?: number
-        paddingBottom?: number
-    }
-    style?: CSSProperties
+interface RoundCarouselProps {
+  images?: RoundCarouselImage[];
+  imageWidth?: number;
+  imageHeight?: number;
+  spacing?: number;
+  speed?: number;
+  direction?: "right" | "left";
+  drag?: boolean;
+  sensitivity?: number;
+  tilt?: number;
+  perspective?: number;
+  cornerRadius?: number;
+  innerDim?: number;
+  background?: string;
+  style?: React.CSSProperties;
 }
 
-const DEFAULT_SLIDES: Slide[] = [
-    {
-        image: {
-            src: "/images/media_1785960992910.jpg",
-        },
-        title: "Software\nEngineer",
-    },
-    {
-        image: {
-            src: "/images/media_1785961075426.jpg",
-        },
-        title: "Systems\nArchitecture",
-    },
-    {
-        image: {
-            src: "/images/media_1785960998082.jpg",
-        },
-        title: "Artificial\nIntelligence",
-    },
-    {
-        image: {
-            src: "/images/media_1785960994956.jpg",
-        },
-        title: "Clean\nCode",
-    },
-]
+const DEFAULT_IMAGES: RoundCarouselImage[] = [
+  { src: "/images/media_1.jpg" },
+  { src: "/images/media_2.jpg" },
+  { src: "/images/media_3.jpg" },
+  { src: "/images/media_4.jpg" },
+  { src: "/images/media_5.jpg" },
+];
 
-const PERSPECTIVE = 1600
-const SCALE_STEP = 0.16
-const MAX_VISIBLE = 2
-const DEPTH = 240
+function __OriginkitBase_RoundCarousel({
+  images = DEFAULT_IMAGES,
+  imageWidth = 300,
+  imageHeight = 300,
+  spacing = 3,
+  speed = 7,
+  direction = "right",
+  drag = true,
+  sensitivity = 5,
+  tilt = -7,
+  perspective = 3000,
+  cornerRadius = 22,
+  innerDim = 3.5,
+  background = "#000000",
+  style = {},
+}: RoundCarouselProps) {
+  const items = images.length > 0 ? images : DEFAULT_IMAGES;
+  const count = items.length;
 
-function cssTransition(t: any): { dur: number; ease: string } {
-    const dur = t && typeof t.duration === "number" ? t.duration : 0.6
-    let ease = "cubic-bezier(0.22, 1, 0.36, 1)"
-    const e = t?.ease
-    if (Array.isArray(e) && e.length === 4) {
-        ease = `cubic-bezier(${e[0]}, ${e[1]}, ${e[2]}, ${e[3]})`
-    } else if (typeof e === "string") {
-        const map: Record<string, string> = {
-            linear: "linear",
-            easeIn: "ease-in",
-            easeOut: "ease-out",
-            easeInOut: "ease-in-out",
+  const ringRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef(0);
+  const rotYRef = useRef(0);
+  const velRef = useRef(0);
+  const lastRef = useRef(0);
+  const dragRef = useRef({ active: false, x: 0 });
+
+  const angle = 360 / count;
+  const factor = 1 + spacing * 0.15;
+  const radius = (imageWidth * factor) / (2 * Math.tan(Math.PI / count));
+  const radiusPx = cornerRadius;
+  const degPerSec = speed * 6 * (direction === "left" ? -1 : 1);
+
+  useEffect(() => {
+    const ring = ringRef.current;
+    if (!ring) return;
+    const apply = () =>
+      (ring.style.transform = `translateZ(${-radius}px) rotateY(${rotYRef.current}deg)`);
+    apply();
+
+    const draw = (now: number) => {
+      const dt = lastRef.current ? (now - lastRef.current) / 1000 : 0;
+      lastRef.current = now;
+      const f = Math.min(dt, 0.1);
+      const d = dragRef.current;
+      if (!d.active) {
+        if (Math.abs(velRef.current) > 0.01) {
+          rotYRef.current += velRef.current * f;
+          velRef.current *= 0.94;
+        } else {
+          rotYRef.current += degPerSec * f;
         }
-        ease = map[e] || "ease"
-    }
-    return { dur, ease }
-}
+      }
+      apply();
+      rafRef.current = requestAnimationFrame(draw);
+    };
+    rafRef.current = requestAnimationFrame(draw);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [radius, degPerSec, count]);
 
-export function Smooth3DSlideshow(props: Smooth3DSlideshowProps) {
-    props = { ...COMPONENT_DEFAULTS, ...props }
-    const {
-        slides = DEFAULT_SLIDES,
-        cardWidth = 557,
-        cardHeight = 420,
-        radius = 0,
-        tilt = 7,
-        sideTilt = 7,
-        gap = 7,
-        opacity = 65,
-        transition,
-        autoplay = false,
-        autoplayDirection = "rightToLeft",
-        showTitle = true,
-        titleFont,
-        titleColor = "#ffffff",
-        titlePosition,
-        style,
-    } = props
+  const onPointerDown = (e: React.PointerEvent) => {
+    if (!drag) return;
+    e.currentTarget.setPointerCapture?.(e.pointerId);
+    dragRef.current = { active: true, x: e.clientX };
+    velRef.current = 0;
+  };
+  const onPointerMove = (e: React.PointerEvent) => {
+    const d = dragRef.current;
+    if (!d.active) return;
+    const dx = e.clientX - d.x;
+    d.x = e.clientX;
+    const k = 0.3 * sensitivity;
+    rotYRef.current += dx * k;
+    velRef.current = dx * k * 60;
+  };
+  const onPointerUp = (e: React.PointerEvent) => {
+    e.currentTarget.releasePointerCapture?.(e.pointerId);
+    dragRef.current.active = false;
+  };
 
-    const tp = titlePosition || {}
-    const corner: TitleCorner = tp.position || "bottomLeft"
-    const isTop = corner === "topLeft" || corner === "topRight"
-    const isRight = corner === "topRight" || corner === "bottomRight"
-    const padLeft = tp.paddingLeft ?? 22
-    const padRight = tp.paddingRight ?? 22
-    const padTop = tp.paddingTop ?? 24
-    const padBottom = tp.paddingBottom ?? 24
+  const faceBase: React.CSSProperties = {
+    position: "absolute",
+    inset: 0,
+    borderRadius: radiusPx,
+    overflow: "hidden",
+    backfaceVisibility: "hidden",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
 
-    const isStatic = useIsStaticRenderer()
-    const list = slides && slides.length ? slides : DEFAULT_SLIDES
-    const n = list.length
-
-    const loop = true
-    const [active, setActive] = useState(0)
-
-    useEffect(() => {
-        setActive((a) => Math.max(0, Math.min(n - 1, a)))
-    }, [n])
-
-    const moveDur =
-        transition && typeof transition.duration === "number"
-            ? transition.duration
-            : 0.6
-    const lockRef = useRef(false)
-    const lock = useCallback(() => {
-        lockRef.current = true
-        window.setTimeout(
-            () => {
-                lockRef.current = false
-            },
-            Math.max(50, moveDur * 1000)
-        )
-    }, [moveDur])
-
-    const step = useCallback(
-        (dir: number) => {
-            if (lockRef.current) return
-            lock()
-            setActive((a) => (((a + dir) % n) + n) % n)
-        },
-        [n, lock]
-    )
-
-    const handleCardClick = useCallback(
-        (i: number) => {
-            if (isStatic || autoplay || lockRef.current) return
-            lock()
-            setActive((a) => (i === a ? (a + 1) % n : i))
-        },
-        [isStatic, autoplay, n, lock]
-    )
-
-    const delay =
-        transition && typeof transition.delay === "number"
-            ? transition.delay
-            : 2.5
-    useEffect(() => {
-        if (isStatic || !autoplay || n < 2) return
-        const ms = Math.max(0.3, delay) * 1000
-        const dir = autoplayDirection === "leftToRight" ? -1 : 1
-        const id = window.setInterval(() => step(dir), ms)
-        return () => window.clearInterval(id)
-    }, [isStatic, autoplay, autoplayDirection, delay, n, step])
-
-    const onKeyDown = useCallback(
-        (e: React.KeyboardEvent) => {
-            if (e.key === "ArrowRight") {
-                e.preventDefault()
-                step(1)
-            } else if (e.key === "ArrowLeft") {
-                e.preventDefault()
-                step(-1)
-            }
-        },
-        [step]
-    )
-
-    const { dur, ease } = cssTransition(transition)
-    const transitionCss = `transform ${dur}s ${ease}, opacity ${dur}s ${ease}`
-
-    const effectiveRadius =
-        (Math.max(0, Math.min(20, radius)) / 20) *
-        (Math.min(cardWidth, cardHeight) / 2)
-    const dim = 1 - Math.max(0, Math.min(100, opacity)) / 100
-
-    const rootStyle: CSSProperties = {
-        ...(style || {}),
-        position: "relative",
+  return (
+    <div
+      style={{
+        ...style,
         width: "100%",
         height: "100%",
-        minWidth: 320,
-        minHeight: 360,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        perspective: `${PERSPECTIVE}px`,
         overflow: "hidden",
-        outline: "none",
-    }
-
-    return (
+        background: `radial-gradient(circle at 50% 12%, var(--color-primary-glow), transparent 30%), var(--color-surface-elevated)`,
+        perspective: `${perspective}px`,
+        cursor: drag ? "grab" : "default",
+        touchAction: "none",
+      }}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      onPointerCancel={onPointerUp}
+    >
+      <div
+        style={{
+          transformStyle: "preserve-3d",
+          transform: `rotateX(${tilt}deg)`,
+        }}
+      >
         <div
-            style={rootStyle}
-            tabIndex={0}
-            role="group"
-            aria-roledescription="carousel"
-            onKeyDown={isStatic ? undefined : onKeyDown}
+          ref={ringRef}
+          style={{
+            position: "relative",
+            width: imageWidth,
+            height: imageHeight,
+            transformStyle: "preserve-3d",
+          }}
         >
-            <div
+          {items.map((img, i) => {
+            const src = img?.src;
+            return (
+              <div
+                key={i}
                 style={{
-                    position: "relative",
-                    width: cardWidth,
-                    height: cardHeight,
-                    transformStyle: "preserve-3d",
+                  position: "absolute",
+                  inset: 0,
+                  transform: `rotateY(${i * angle}deg) translateZ(${radius}px)`,
+                  transformStyle: "preserve-3d",
                 }}
-            >
-                {list.map((slide, i) => {
-                    let rel = i - active
-                    if (loop) {
-                        if (rel > n / 2) rel -= n
-                        if (rel < -n / 2) rel += n
-                    }
-                    const ax = Math.abs(rel)
-                    const visible = ax <= MAX_VISIBLE
-                    const isActive = rel === 0
-                    const sc = Math.max(0.4, 1 - ax * SCALE_STEP)
-                    const tx = rel * (gap * 30)
-                    const tz = -ax * DEPTH
-                    const ry = -rel * tilt
-                    const rz = rel * sideTilt
-                    const src = slide.image?.src || ""
-
-                    const cardStyle: CSSProperties = {
-                        position: "absolute",
-                        left: "50%",
-                        top: "50%",
-                        width: cardWidth,
-                        height: cardHeight,
-                        borderRadius: effectiveRadius,
-                        overflow: "hidden",
-                        transformStyle: "preserve-3d",
-                        transformOrigin: "center center",
-                        transform: `translate(-50%, -50%) translateX(${tx}px) translateZ(${tz}px) rotateY(${ry}deg) rotateZ(${rz}deg) scale(${sc})`,
-                        transition: transitionCss,
-                        opacity: visible ? 1 : 0,
-                        cursor: autoplay || isActive ? "default" : "pointer",
-                        pointerEvents:
-                            visible && !isStatic && !autoplay ? "auto" : "none",
-                        backgroundColor: "#1a1a1a",
-                    }
-
-                    return (
-                        <div
-                            key={i}
-                            style={cardStyle}
-                            onClick={
-                                isStatic ? undefined : () => handleCardClick(i)
-                            }
-                            aria-label={slide.title}
-                            aria-hidden={!visible}
-                        >
-                            {src ? (
-                                <img
-                                    src={src}
-                                    alt={slide.image?.alt || slide.title || ""}
-                                    draggable={false}
-                                    style={{
-                                        position: "absolute",
-                                        inset: 0,
-                                        width: "100%",
-                                        height: "100%",
-                                        objectFit: "cover",
-                                        display: "block",
-                                        userSelect: "none",
-                                    }}
-                                />
-                            ) : null}
-
-                            {showTitle && (
-                                <>
-                                    <div
-                                        style={{
-                                            position: "absolute",
-                                            inset: 0,
-                                            background: isTop
-                                                ? "linear-gradient(0deg, rgba(0,0,0,0) 35%, rgba(0,0,0,0.7) 100%)"
-                                                : "linear-gradient(180deg, rgba(0,0,0,0) 35%, rgba(0,0,0,0.7) 100%)",
-                                            pointerEvents: "none",
-                                        }}
-                                    />
-                                    <div
-                                        style={{
-                                            position: "absolute",
-                                            left: padLeft,
-                                            right: padRight,
-                                            [isTop ? "top" : "bottom"]: isTop
-                                                ? padTop
-                                                : padBottom,
-                                            textAlign: isRight
-                                                ? "right"
-                                                : "left",
-                                            pointerEvents: "none",
-                                        }}
-                                    >
-                                        <span
-                                            style={{
-                                                color: titleColor,
-                                                fontSize: 28,
-                                                fontWeight: 700,
-                                                lineHeight: "1.1em",
-                                                letterSpacing: "-0.02em",
-                                                whiteSpace: "pre-line",
-                                                textShadow:
-                                                    "0 2px 10px rgba(0,0,0,0.4)",
-                                                ...(titleFont || {}),
-                                            }}
-                                        >
-                                            {slide.title}
-                                        </span>
-                                    </div>
-                                </>
-                            )}
-                            <div
-                                style={{
-                                    position: "absolute",
-                                    inset: 0,
-                                    background: "#000000",
-                                    opacity: isActive ? 0 : dim,
-                                    transition: `opacity ${dur}s ${ease}`,
-                                    pointerEvents: "none",
-                                }}
-                            />
-                        </div>
-                    )
-                })}
-            </div>
+              >
+                <div
+                  style={{
+                    ...faceBase,
+                    backgroundColor: src ? "transparent" : "var(--color-surface-elevated)",
+                    backgroundImage: src ? `url(${src})` : undefined,
+                    boxShadow: "var(--shadow-elevated)",
+                  }}
+                />
+                <div
+                  style={{
+                    ...faceBase,
+                    transform: "rotateY(180deg)",
+                    backgroundColor: src ? "transparent" : "var(--color-bg-base)",
+                    backgroundImage: src ? `url(${src})` : undefined,
+                    filter: `brightness(${innerDim / 10})`,
+                  }}
+                />
+              </div>
+            );
+          })}
         </div>
-    )
+      </div>
+    </div>
+  );
 }
 
-const COMPONENT_DEFAULTS = {
-    slides: DEFAULT_SLIDES,
-    cardWidth: 320,
-    cardHeight: 400,
-    radius: 7,
-    tilt: 2,
-    sideTilt: 15,
-    gap: 8,
-    opacity: 24,
-    autoplay: true,
-    autoplayDirection: "rightToLeft" as AutoplayDir,
-    transition: {
-        type: "tween",
-        duration: 3,
-        delay: 2.5,
-        ease: [0.22, 1, 0.36, 1],
+const __originkitPresetProps = {
+  images: [
+    {
+      src: "/images/media_1.jpg",
     },
-    showTitle: false,
-    titleFont: {
-        fontFamily: "Inter",
-        fontWeight: "bold",
-        fontSize: "24px",
-        letterSpacing: "-0.02em",
-        lineHeight: "1.1em",
-    } as any,
-    titleColor: "#ffffff",
-    titlePosition: {
-        position: "bottomLeft" as TitleCorner,
-        paddingLeft: 22,
-        paddingRight: 22,
-        paddingTop: 24,
-        paddingBottom: 24,
+    {
+      src: "/images/media_2.jpg",
     },
+    {
+      src: "/images/media_3.jpg",
+    },
+    {
+      src: "/images/media_4.jpg",
+    },
+    {
+      src: "/images/media_5.jpg",
+    },
+  ],
+  imageWidth: 206,
+  imageHeight: 368,
+  spacing: 9,
+  speed: 1,
+  tilt: 0,
+  cornerRadius: 49,
+  innerDim: 2.5,
+  perspective: 1550,
+};
+
+export default function RoundCarousel(props: Record<string, unknown>) {
+  return <__OriginkitBase_RoundCarousel {...(__originkitPresetProps as Record<string, unknown>)} {...props} />;
 }
+
+export const Smooth3DSlideshow = RoundCarousel;

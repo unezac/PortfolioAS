@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Sparkle, FileText } from "@phosphor-icons/react";
 import { AnimatedLine } from "../AnimatedLine";
 import { MagneticButton } from "../MagneticButton";
-import { Smooth3DSlideshow } from "../Smooth3DSlideshow";
+import RoundCarousel from "../Smooth3DSlideshow";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 export function ArrivalSection() {
@@ -88,15 +88,15 @@ export function ArrivalSection() {
             </motion.div>
           </div>
 
-          {/* Right Column - 3D Slideshow */}
+          {/* Right Column - Hero Carousel */}
           <div className="col-span-1 md:col-span-5 lg:col-span-6 relative z-0 flex items-center justify-center mt-16 md:mt-0">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1.5, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full h-full min-h-[450px] relative pointer-events-auto"
+              className="w-full h-full min-h-[450px] relative pointer-events-auto overflow-hidden"
             >
-              <Smooth3DSlideshow />
+              <RoundCarousel />
             </motion.div>
           </div>
         </div>

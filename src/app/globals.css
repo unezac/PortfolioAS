@@ -204,6 +204,29 @@ body {
   font-weight: 500;
 }
 
+/* Animated gradient text */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-gradient-text {
+  display: inline-block;
+  background: linear-gradient(120deg, #5B5FFB, #8E5BFB, #FB5B9B, #5BFBF4);
+  background-size: 300% 300%;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: gradientShift 3.5s ease infinite;
+}
+
 /* Common resets and performance */
 .will-animate {
   will-change: transform, opacity;

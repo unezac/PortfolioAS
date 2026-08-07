@@ -56,7 +56,7 @@ export function SpotlightCard({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={cn(
-        "relative overflow-hidden rounded-[2rem] bg-[#0A0A0A] border border-white/5",
+        "relative overflow-hidden rounded-[2rem] bg-[var(--color-surface-elevated)] border border-[var(--color-border-glass)] shadow-[var(--shadow-elevated)]",
         className
       )}
       {...props}
@@ -71,7 +71,7 @@ export function SpotlightCard({
       />
       
       {/* Content wrapper with inner bezel */}
-      <div className="absolute inset-[1px] rounded-[calc(2rem-1px)] bg-[#0A0A0A] z-0" />
+      <div className="absolute inset-[1px] rounded-[calc(2rem-1px)] bg-[var(--color-surface-elevated)] z-0" />
       
       <div className="relative z-10 w-full h-full p-6 sm:p-8">
         {children}

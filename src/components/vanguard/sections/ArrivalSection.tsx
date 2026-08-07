@@ -10,7 +10,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 export function ArrivalSection() {
   const { t } = useLanguage();
   return (
-    <section id="arrival" className="relative min-h-[100dvh] flex flex-col justify-center pt-24 pb-12 overflow-hidden">
+    <section id="arrival" className="relative min-h-[100dvh] flex flex-col justify-start md:justify-center pt-32 md:pt-24 pb-12 overflow-hidden">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
         
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center">
@@ -27,7 +27,7 @@ export function ArrivalSection() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#5B5FFB] opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-[#5B5FFB]"></span>
               </span>
-              <span className="text-mono-label text-zinc-300">{t("arrival.status")}</span>
+              <span className="text-mono-label text-[var(--color-text-primary)]">{t("arrival.status")}</span>
             </motion.div>
 
             {/* Huge Name */}
@@ -37,8 +37,8 @@ export function ArrivalSection() {
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
               className="mb-6"
             >
-              <h1 className="text-display-xl text-white">
-                <span className="block text-zinc-500">{t("arrival.firstName")}</span>
+              <h1 className="text-display-xl text-[var(--color-text-primary)]">
+                <span className="block text-[var(--color-text-secondary)]">{t("arrival.firstName")}</span>
                 <span className="block">{t("arrival.lastName")}</span>
               </h1>
             </motion.div>
@@ -58,7 +58,7 @@ export function ArrivalSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="max-w-xl text-xl text-zinc-400 leading-relaxed mb-10"
+              className="max-w-xl text-xl text-[var(--color-text-secondary)] leading-relaxed mb-10"
             >
               {t("arrival.description")}
             </motion.p>
@@ -110,7 +110,7 @@ export function ArrivalSection() {
         animate={{ opacity: 0.2 }}
         transition={{ duration: 2, ease: [0.16, 1, 0.3, 1] }}
       >
-        <div className="absolute right-0 top-0 w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-[#5B5FFB]/40 via-[#5B5FFB]/20 to-transparent blur-3xl animate-[spin_40s_linear_infinite]" />
+        <div className="absolute right-0 top-0 w-[600px] h-[600px] rounded-full bg-gradient-to-tr from-[var(--color-primary-glow)] to-transparent blur-3xl animate-[spin_40s_linear_infinite]" />
       </motion.div>
     </section>
   );

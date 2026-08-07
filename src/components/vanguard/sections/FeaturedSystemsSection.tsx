@@ -48,8 +48,8 @@ export function FeaturedSystemsSection() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mb-16"
         >
-          <span className="text-mono-label text-[#5B5FFB] mb-4 block">{t("systems.title")}</span>
-          <h2 className="text-display-l text-white">{t("systems.subtitle")}</h2>
+          <span className="text-mono-label text-[var(--color-primary)] mb-4 block">{t("systems.title")}</span>
+          <h2 className="text-display-l text-[var(--color-text-primary)]">{t("systems.subtitle")}</h2>
         </motion.div>
 
         <div className="flex flex-col gap-12">
@@ -65,24 +65,24 @@ export function FeaturedSystemsSection() {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 h-full min-h-[400px]">
                   
                   {/* Info Panel */}
-                  <div className="col-span-1 lg:col-span-5 p-8 sm:p-12 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-white/10">
+                  <div className="col-span-1 lg:col-span-5 p-8 sm:p-12 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-[var(--color-border-glass)]">
                     <div>
                       <div className="flex items-center justify-between mb-8">
-                        <span className="text-mono-label text-zinc-500">{system.year}</span>
-                        <a href={system.link} className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors text-white group-hover:scale-110 duration-300">
+                        <span className="text-mono-label text-[var(--color-text-tertiary)]">{system.year}</span>
+                        <a href={system.link} className="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--color-border-glass)] hover:bg-[var(--color-border-highlight)] transition-colors text-[var(--color-text-primary)] group-hover:scale-110 duration-300">
                           <ArrowUpRight size={20} weight="bold" />
                         </a>
                       </div>
-                      <h3 className="text-4xl font-medium text-white mb-2">{system.name}</h3>
-                      <p className="text-zinc-500 text-sm mb-6">{t(`systems.items.${system.id}.role`)}</p>
-                      <p className="text-zinc-400 leading-relaxed">
+                      <h3 className="text-4xl font-medium text-[var(--color-text-primary)] mb-2">{system.name}</h3>
+                      <p className="text-[var(--color-text-tertiary)] text-sm mb-6">{t(`systems.items.${system.id}.role`)}</p>
+                      <p className="text-[var(--color-text-secondary)] leading-relaxed">
                         {t(`systems.items.${system.id}.description`)}
                       </p>
                     </div>
                     
                     <div className="flex flex-wrap gap-2 mt-8">
                       {system.tech.map((t) => (
-                        <span key={t} className="px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-zinc-300 font-medium tracking-wide">
+                        <span key={t} className="px-3 py-1 rounded-full border border-[var(--color-border-glass)] bg-[var(--color-surface-solid)] text-xs text-[var(--color-text-secondary)] font-medium tracking-wide">
                           {t}
                         </span>
                       ))}
@@ -90,14 +90,14 @@ export function FeaturedSystemsSection() {
                   </div>
                   
                   {/* Visual Panel (Cinematic Abstract Representation instead of a Dashboard UI) */}
-                  <div className="col-span-1 lg:col-span-7 relative bg-[#050505] overflow-hidden min-h-[300px] flex items-center justify-center p-8">
+                  <div className="col-span-1 lg:col-span-7 relative bg-[var(--color-bg-base)] overflow-hidden min-h-[300px] flex items-center justify-center p-8">
                     {/* Abstract Hardware/System aesthetic */}
-                    <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_center,rgba(91,95,251,0.4),transparent_70%)] mix-blend-screen group-hover:opacity-40 transition-opacity duration-700" />
+                    <div className="absolute inset-0 opacity-20 bg-[radial-gradient(ellipse_at_center,var(--color-primary-glow),transparent_70%)] group-hover:opacity-40 transition-opacity duration-700" />
                     
-                    <div className="relative w-full max-w-sm aspect-square border border-white/10 rounded-full flex items-center justify-center">
-                      <div className="absolute inset-0 border border-white/5 rounded-full scale-75 animate-[spin_10s_linear_infinite]" />
-                      <div className="absolute inset-0 border border-dashed border-white/10 rounded-full scale-110 animate-[spin_20s_linear_infinite_reverse]" />
-                      <div className="w-1/2 h-1/2 bg-gradient-to-tr from-[#5B5FFB] to-transparent rounded-full blur-2xl opacity-50 group-hover:opacity-80 transition-opacity duration-500" />
+                    <div className="relative w-full max-w-sm aspect-square border border-[var(--color-border-glass)] rounded-full flex items-center justify-center">
+                      <div className="absolute inset-0 border border-[var(--color-border-glass)] rounded-full scale-75 animate-[spin_10s_linear_infinite]" />
+                      <div className="absolute inset-0 border border-dashed border-[var(--color-border-glass)] rounded-full scale-110 animate-[spin_20s_linear_infinite_reverse]" />
+                      <div className="w-1/2 h-1/2 bg-gradient-to-tr from-[var(--color-primary)] to-transparent rounded-full blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
                     </div>
                   </div>
                   

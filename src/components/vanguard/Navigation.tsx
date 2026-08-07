@@ -1,9 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { List, X } from "@phosphor-icons/react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
+import { List, X, GlobeHemisphereWest, Sun, Moon } from "@phosphor-icons/react";
 import { cn } from "@/lib/utils";
+import { useLanguage } from "@/i18n/LanguageContext";
+import { useTheme } from "next-themes";
 
 const NAV_LINKS = [
   { label: "Arrival", href: "#arrival" },
@@ -18,77 +20,127 @@ const NAV_LINKS = [
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const { language, toggleLanguage } = useLanguage();
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  const { scrollY } = useScroll();
+  const [hidden, setHidden] = useState(false);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (isOpen) {
+      setHidden(false);
+      return;
+    }
+    const previous = scrollY.getPrevious() ?? 0;
+    if (latest > previous && latest > 100) {
+      setHidden(true);
+    } else {
+      setHidden(false);
+    }
+  });
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const toggleTheme = () => {
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  };
 
   return (
     <>
-      <header className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center">
+      <motion.header
+        variants={{
+          visible: { y: 0, opacity: 1 },
+          hidden: { y: -100, opacity: 0 }
+        }}
+        animate={hidden ? "hidden" : "visible"}
+        transition={{ type: "spring", stiffness: 400, damping: 30 }}
+        className="fixed top-6 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center"
+      >
         <motion.nav
+          layout
           initial={false}
           animate={{
-            width: isOpen ? "320px" : "auto",
-            borderRadius: isOpen ? "28px" : "999px",
+            width: isOpen ? 320 : "auto",
+            borderRadius: isOpen ? 32 : 999,
           }}
-          transition={{ type: "spring", stiffness: 400, damping: 25, mass: 0.8 }}
-          className={cn(
-            "glass-panel overflow-hidden transition-colors duration-500",
-            isOpen ? "bg-[#0A0A0A]/90" : "bg-[#0A0A0A]/50"
-          )}
+          transition={{ type: "spring", stiffness: 450, damping: 32, mass: 0.6 }}
+          className="overflow-hidden shadow-[0_20px_40px_-10px_rgba(0,0,0,0.3)] bg-black dark:bg-[#0A0A0A] ring-1 ring-white/10 dark:ring-white/5"
         >
-          <div className="flex items-center justify-between px-2 py-2">
+          <motion.div layout className="flex items-center justify-between px-2 py-2">
             {!isOpen && (
               <motion.div
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -10 }}
-                className="px-4 text-sm font-medium tracking-wide text-zinc-300 whitespace-nowrap"
+                layout="position"
+                initial={{ opacity: 0, filter: "blur(4px)" }}
+                animate={{ opacity: 1, filter: "blur(0px)" }}
+                exit={{ opacity: 0, filter: "blur(4px)" }}
+                transition={{ duration: 0.2 }}
+                className="flex items-center gap-3 px-4"
               >
-                Abdellah Selmani
+                {/* Mobile: Initials, Desktop: Full Name */}
+                <span className="text-sm font-medium tracking-wide text-white whitespace-nowrap">
+                  <span className="sm:hidden font-bold">AS</span>
+                  <span className="hidden sm:inline">Abdellah Selmani</span>
+                </span>
               </motion.div>
             )}
 
-            <button
+            <motion.button
+              layout
               onClick={() => setIsOpen(!isOpen)}
-              className="relative w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors ml-auto"
+              className="relative w-9 h-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors ml-auto"
               aria-label="Toggle menu"
             >
-              <div className="relative w-5 h-5 flex items-center justify-center">
-                <motion.span
-                  animate={{
-                    rotate: isOpen ? 45 : 0,
-                    y: isOpen ? 0 : -4,
-                  }}
+              {isOpen ? (
+                <motion.div
+                  animate={{ rotate: isOpen ? 90 : 0 }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className="absolute w-5 h-[1.5px] bg-white origin-center"
-                />
-                <motion.span
-                  animate={{
-                    rotate: isOpen ? -45 : 0,
-                    y: isOpen ? 0 : 4,
-                  }}
+                >
+                  <X size={18} weight="bold" className="text-white" />
+                </motion.div>
+              ) : (
+                <motion.div
+                  initial={{ x: 0 }}
+                  animate={{ x: 0 }}
                   transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                  className="absolute w-5 h-[1.5px] bg-white origin-center"
-                />
-              </div>
-            </button>
-          </div>
+                  className="relative w-8 h-6 flex items-center justify-center"
+                >
+                  <span
+                    className="absolute w-7 h-[2px] bg-white rounded-full"
+                    style={{ transform: "translateY(-7px)" }}
+                  />
+                  <span
+                    className="absolute w-8 h-[2px] bg-white rounded-full"
+                    style={{ transform: "translateY(0px)" }}
+                  />
+                  <span
+                    className="absolute w-6 h-[2px] bg-white rounded-full"
+                    style={{ transform: "translateY(7px)" }}
+                  />
+                </motion.div>
+              )}
+            </motion.button>
+          </motion.div>
 
           <AnimatePresence>
             {isOpen && (
               <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                className="px-6 pb-6 pt-2"
+                layout
+                initial={{ opacity: 0, filter: "blur(10px)", scale: 0.95 }}
+                animate={{ opacity: 1, filter: "blur(0px)", scale: 1 }}
+                exit={{ opacity: 0, filter: "blur(10px)", scale: 0.95 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+                className="px-6 pb-6 pt-2 origin-top"
               >
                 <div className="flex flex-col gap-1">
                   {NAV_LINKS.map((link, i) => (
                     <motion.div
                       key={link.label}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ delay: i * 0.04, type: "spring", stiffness: 300, damping: 20 }}
+                      initial={{ opacity: 0, y: 10, filter: "blur(4px)" }}
+                      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                      exit={{ opacity: 0, y: -10, filter: "blur(4px)" }}
+                      transition={{ delay: i * 0.04 + 0.1, type: "spring", stiffness: 300, damping: 20 }}
                     >
                       <a
                         href={link.href}
@@ -100,11 +152,35 @@ export function Navigation() {
                     </motion.div>
                   ))}
                 </div>
+                
+                {/* Mobile Controls */}
+                <motion.div
+                  initial={{ opacity: 0, filter: "blur(4px)", y: 10 }}
+                  animate={{ opacity: 1, filter: "blur(0px)", y: 0 }}
+                  exit={{ opacity: 0, filter: "blur(4px)", y: -10 }}
+                  transition={{ delay: NAV_LINKS.length * 0.04 + 0.1, type: "spring" }}
+                  className="flex sm:hidden items-center justify-between mt-6 pt-6 border-t border-white/10"
+                >
+                  <button
+                    onClick={() => { toggleTheme(); setIsOpen(false); }}
+                    className="flex items-center gap-2 text-sm font-medium text-zinc-400 hover:text-white transition-colors"
+                  >
+                    {mounted && resolvedTheme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+                    {mounted && resolvedTheme === "dark" ? "Light Mode" : "Dark Mode"}
+                  </button>
+                  <button
+                    onClick={() => { toggleLanguage(); setIsOpen(false); }}
+                    className="flex items-center gap-2 text-sm font-medium text-zinc-400 hover:text-white transition-colors"
+                  >
+                    <GlobeHemisphereWest size={18} />
+                    <span className="uppercase">{language}</span>
+                  </button>
+                </motion.div>
               </motion.div>
             )}
           </AnimatePresence>
         </motion.nav>
-      </header>
+      </motion.header>
       
       {/* Expanded Modal Overlay */}
       <AnimatePresence>

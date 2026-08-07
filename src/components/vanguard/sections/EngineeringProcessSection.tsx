@@ -23,13 +23,13 @@ export function EngineeringProcessSection() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mb-16"
         >
-          <span className="text-mono-label text-[#5B5FFB] mb-4 block">{t("process.title")}</span>
-          <h2 className="text-display-l text-white">{t("process.subtitle")}</h2>
+          <span className="text-mono-label text-[var(--color-primary)] mb-4 block">{t("process.title")}</span>
+          <h2 className="text-display-l text-[var(--color-text-primary)]">{t("process.subtitle")}</h2>
         </motion.div>
 
         <div className="relative">
           {/* Timeline Line */}
-          <div className="absolute left-[1.5rem] md:left-1/2 top-0 bottom-0 w-px bg-white/10 -translate-x-1/2 hidden md:block" />
+          <div className="absolute left-[1.5rem] md:left-1/2 top-0 bottom-0 w-px bg-[var(--color-border-glass)] -translate-x-1/2 hidden md:block" />
 
           <div className="flex flex-col gap-12 md:gap-24">
             {STEPS.map((step, index) => {
@@ -48,17 +48,17 @@ export function EngineeringProcessSection() {
                         className="w-full"
                       >
                         <GlassCard>
-                          <span className="text-mono-label text-[#5B5FFB] mb-4 block">Phase {step.num}</span>
-                          <h3 className="text-2xl font-medium text-white mb-3">{t(`process.steps.${step.num}.title`)}</h3>
-                          <p className="text-zinc-400 text-sm leading-relaxed">{t(`process.steps.${step.num}.text`)}</p>
+                          <span className="text-mono-label text-[var(--color-primary)] mb-4 block">Phase {step.num}</span>
+                          <h3 className="text-2xl font-medium text-[var(--color-text-primary)] mb-3">{t(`process.steps.${step.num}.title`)}</h3>
+                          <p className="text-[var(--color-text-secondary)] text-sm leading-relaxed">{t(`process.steps.${step.num}.text`)}</p>
                         </GlassCard>
                       </motion.div>
                     )}
                   </div>
 
                   {/* Center Node */}
-                  <div className="absolute left-0 md:left-1/2 -translate-x-1/2 w-12 h-12 rounded-full border border-white/10 bg-[#0A0A0A] flex items-center justify-center z-10 hidden md:flex">
-                    <span className="text-xs font-mono text-zinc-500">{step.num}</span>
+                  <div className="absolute left-0 md:left-1/2 -translate-x-1/2 w-12 h-12 rounded-full border border-[var(--color-border-glass)] bg-[var(--color-surface-elevated)] flex items-center justify-center z-10 hidden md:flex">
+                    <span className="text-xs font-mono text-[var(--color-text-tertiary)]">{step.num}</span>
                   </div>
 
                   {/* Right Side (Content for odd, Empty for even on Desktop) */}
@@ -72,9 +72,9 @@ export function EngineeringProcessSection() {
                         className="w-full"
                       >
                         <GlassCard>
-                          <span className="text-mono-label text-[#5B5FFB] mb-4 block">Phase {step.num}</span>
-                          <h3 className="text-2xl font-medium text-white mb-3">{t(`process.steps.${step.num}.title`)}</h3>
-                          <p className="text-zinc-400 text-sm leading-relaxed">{t(`process.steps.${step.num}.text`)}</p>
+                          <span className="text-mono-label text-[var(--color-primary)] mb-4 block">Phase {step.num}</span>
+                          <h3 className="text-2xl font-medium text-[var(--color-text-primary)] mb-3">{t(`process.steps.${step.num}.title`)}</h3>
+                          <p className="text-[var(--color-text-secondary)] text-sm leading-relaxed">{t(`process.steps.${step.num}.text`)}</p>
                         </GlassCard>
                       </motion.div>
                     )}
@@ -89,9 +89,9 @@ export function EngineeringProcessSection() {
                       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                     >
                       <GlassCard>
-                        <span className="text-mono-label text-[#5B5FFB] mb-4 block">Phase {step.num}</span>
-                        <h3 className="text-2xl font-medium text-white mb-3">{t(`process.steps.${step.num}.title`)}</h3>
-                        <p className="text-zinc-400 text-sm leading-relaxed">{t(`process.steps.${step.num}.text`)}</p>
+                        <span className="text-mono-label text-[var(--color-primary)] mb-4 block">Phase {step.num}</span>
+                        <h3 className="text-2xl font-medium text-[var(--color-text-primary)] mb-3">{t(`process.steps.${step.num}.title`)}</h3>
+                        <p className="text-[var(--color-text-secondary)] text-sm leading-relaxed">{t(`process.steps.${step.num}.text`)}</p>
                       </GlassCard>
                     </motion.div>
                   </div>

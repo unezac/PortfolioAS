@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { GeistSans, GeistMono } from "geist/font";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import { LanguageSwitcher } from "@/components/vanguard/LanguageSwitcher";
+import { ThemeProvider } from "@/components/vanguard/ThemeProvider";
 import "./globals.css";
 const baseUrl = "https://abdellahselmani.vercel.app";
 
@@ -76,18 +77,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="antialiased">
-        {/* Vanguard 4-Layer Background Architecture */}
-        <div className="layer-ambient" aria-hidden="true"></div>
-        <div className="layer-noise" aria-hidden="true"></div>
-        <div className="layer-grid" aria-hidden="true"></div>
-        
-        {/* Main Content */}
-        <LanguageProvider>
-          <LanguageSwitcher />
-          <main className="relative z-0">
-            {children}
-          </main>
-        </LanguageProvider>
+        <ThemeProvider>
+          {/* Vanguard 4-Layer Background Architecture */}
+          <div className="layer-ambient" aria-hidden="true"></div>
+          <div className="layer-noise" aria-hidden="true"></div>
+          <div className="layer-grid" aria-hidden="true"></div>
+          
+          {/* Main Content */}
+          <LanguageProvider>
+            <LanguageSwitcher />
+            <main className="relative z-0">
+              {children}
+            </main>
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

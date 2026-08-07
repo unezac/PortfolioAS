@@ -15,7 +15,7 @@ const STACK = [
 export function TechStackSection() {
   const { t } = useLanguage();
   return (
-    <section id="stack" className="relative py-32 px-4 sm:px-6 border-t border-white/5">
+    <section id="stack" className="relative py-32 px-4 sm:px-6 border-t border-[var(--color-border-glass)]">
       <div className="w-full max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -24,8 +24,8 @@ export function TechStackSection() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="mb-16"
         >
-          <span className="text-mono-label text-[#5B5FFB] mb-4 block">{t("stack.title")}</span>
-          <h2 className="text-display-l text-white">{t("stack.subtitle")}</h2>
+          <span className="text-mono-label text-[var(--color-primary)] mb-4 block">{t("stack.title")}</span>
+          <h2 className="text-display-l text-[var(--color-text-primary)]">{t("stack.subtitle")}</h2>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -38,11 +38,11 @@ export function TechStackSection() {
               transition={{ duration: 0.6, delay: groupIndex * 0.1, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-col"
             >
-              <h3 className="text-lg font-medium text-white mb-6 border-b border-white/10 pb-4">{t(`stack.categories.${(group as any).id}`)}</h3>
+              <h3 className="text-lg font-medium text-[var(--color-text-primary)] mb-6 border-b border-[var(--color-border-glass)] pb-4">{t(`stack.categories.${(group as any).id}`)}</h3>
               <ul className="flex flex-col gap-3">
                 {group.items.map((item) => (
-                  <li key={item} className="flex items-center text-zinc-400">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#5B5FFB]/50 mr-3"></span>
+                  <li key={item} className="flex items-center text-[var(--color-text-secondary)]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] opacity-50 mr-3"></span>
                     {item}
                   </li>
                 ))}

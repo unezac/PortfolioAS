@@ -31,6 +31,33 @@
   /* Typography */
   --font-sans: var(--font-geist-sans), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), monospace;
+
+  /* Shadows */
+  --shadow-elevated: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* Light Mode Overrides */
+[data-theme='light'] {
+  --color-bg-base: #F5F5F7;
+  
+  --color-surface-solid: #E8E8ED;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-glass: rgba(255, 255, 255, 0.72);
+  
+  --color-border-glass: rgba(0, 0, 0, 0.08);
+  --color-border-highlight: rgba(99, 102, 241, 0.25);
+  
+  --color-text-primary: #1D1D1F;
+  --color-text-secondary: #86868B;
+  --color-text-tertiary: #A1A1A6;
+  
+  --color-primary: #6366F1;
+  --color-primary-hover: #4F46E5;
+  --color-primary-glow: rgba(99, 102, 241, 0.15);
+
+  --shadow-elevated: 0 4px 6px -1px rgba(0,0,0,0.02), 0 20px 40px -5px rgba(0,0,0,0.06);
+  --shadow-glass: 0 4px 30px rgba(0, 0, 0, 0.04);
 }
 
 :root {
@@ -59,6 +86,7 @@ body {
   overflow-x: hidden;
   position: relative;
   min-height: 100dvh;
+  transition: background-color 0.5s var(--ease-vanguard), color 0.5s var(--ease-vanguard);
 }
 
 /* =========================================
@@ -78,6 +106,12 @@ body {
     radial-gradient(circle at 85% 85%, rgba(91, 95, 251, 0.08), transparent 35%);
 }
 
+[data-theme='light'] .layer-ambient {
+  background: 
+    radial-gradient(circle at 15% 15%, rgba(99, 102, 241, 0.03), transparent 40%),
+    radial-gradient(circle at 85% 85%, rgba(99, 102, 241, 0.02), transparent 35%);
+}
+
 /* Layer 3: Texture (SVG Noise) */
 .layer-noise {
   position: fixed;
@@ -87,6 +121,11 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   opacity: 0.035;
   mix-blend-mode: screen;
+}
+
+[data-theme='light'] .layer-noise {
+  opacity: 0.015;
+  mix-blend-mode: multiply;
 }
 
 /* Layer 4: Structure (Tiny Grid) */
@@ -103,6 +142,12 @@ body {
   mask-image: radial-gradient(ellipse at 50% 50%, black 20%, transparent 80%);
 }
 
+[data-theme='light'] .layer-grid {
+  background-image: 
+    linear-gradient(to right, rgba(15, 23, 42, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.04) 1px, transparent 1px);
+}
+
 
 /* =========================================
    UTILITIES
@@ -114,7 +159,12 @@ body {
   -webkit-backdrop-filter: blur(30px);
   background-color: var(--color-surface-glass);
   border: 1px solid var(--color-border-glass);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-glass);
+}
+
+[data-theme='light'] .glass-panel {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 /* Double Bezel */

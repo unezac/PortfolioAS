@@ -36,10 +36,10 @@ export function CapabilitiesSection() {
           className="mb-16 flex flex-col md:flex-row md:items-end justify-between gap-8"
         >
           <div>
-            <span className="text-mono-label text-[#5B5FFB] mb-4 block">{t("capabilities.title")}</span>
-            <h2 className="text-display-l text-white">{t("capabilities.subtitle")}</h2>
+            <span className="text-mono-label text-[var(--color-primary)] mb-4 block">{t("capabilities.title")}</span>
+            <h2 className="text-display-l text-[var(--color-text-primary)]">{t("capabilities.subtitle")}</h2>
           </div>
-          <p className="max-w-md text-zinc-400 text-lg leading-relaxed">
+          <p className="max-w-md text-[var(--color-text-secondary)] text-lg leading-relaxed">
             {t("capabilities.description")}
           </p>
         </motion.div>
@@ -56,8 +56,8 @@ export function CapabilitiesSection() {
               <SpotlightCard className="h-full min-h-[250px] p-8 flex flex-col justify-between" spotlightColor="rgba(91,95,251,0.15)">
                 <div className="text-4xl mb-8">{cap.icon}</div>
                 <div>
-                  <h3 className="text-2xl font-medium text-white mb-3">{t(`capabilities.items.${(cap as any).id}.title`)}</h3>
-                  <p className="text-zinc-400 leading-relaxed text-sm">
+                  <h3 className="text-2xl font-medium text-[var(--color-text-primary)] mb-3">{t(`capabilities.items.${(cap as any).id}.title`)}</h3>
+                  <p className="text-[var(--color-text-secondary)] leading-relaxed text-sm">
                     {t(`capabilities.items.${(cap as any).id}.description`)}
                   </p>
                 </div>

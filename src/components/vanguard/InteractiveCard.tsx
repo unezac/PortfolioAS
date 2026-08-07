@@ -45,7 +45,7 @@ export function InteractiveCard({ children, className, ...props }: InteractiveCa
       transition={{ type: "spring", stiffness: 300, damping: 20, mass: 0.5 }}
       whileTap={{ scale: 0.98 }}
       className={cn(
-        "relative rounded-[2rem] bg-[#0A0A0A] border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]",
+        "relative rounded-[2rem] bg-[var(--color-surface-elevated)] border border-[var(--color-border-glass)] shadow-[var(--shadow-elevated)]",
         className
       )}
       style={{ perspective: 1000, transformStyle: "preserve-3d" }}
@@ -55,7 +55,7 @@ export function InteractiveCard({ children, className, ...props }: InteractiveCa
       <motion.div 
         className="absolute inset-0 z-20 rounded-[2rem] pointer-events-none opacity-0 group-hover:opacity-100 will-animate transition-opacity duration-300"
         animate={{
-          background: `radial-gradient(800px circle at ${rotateY * 10 + 50}% ${-rotateX * 10 + 50}%, rgba(255,255,255,0.06), transparent 40%)`
+          background: `radial-gradient(800px circle at ${rotateY * 10 + 50}% ${-rotateX * 10 + 50}%, var(--color-primary-glow), transparent 40%)`
         }}
       />
       <div className="relative z-10 w-full h-full transform-gpu" style={{ transform: "translateZ(30px)" }}>

@@ -33,9 +33,9 @@ export function MagneticButton({
   };
 
   const variants = {
-    primary: "bg-[#5B5FFB] text-white shadow-[0_0_40px_-10px_rgba(91,95,251,0.35)] hover:bg-[#7377FF] border border-white/10",
-    glass: "glass-panel text-white hover:bg-white/10",
-    outline: "border border-white/20 text-zinc-300 hover:text-white hover:bg-white/5",
+    primary: "bg-[var(--color-primary)] text-white shadow-[0_0_40px_-10px_var(--color-primary-glow)] hover:bg-[var(--color-primary-hover)] border border-[var(--color-border-glass)]",
+    glass: "glass-panel text-[var(--color-text-primary)] hover:bg-[var(--color-border-glass)]",
+    outline: "border border-[var(--color-border-glass)] text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-border-glass)]",
   };
 
   return (
